@@ -1,11 +1,15 @@
 %% BJT Bias Monte Carlo Analysis
-% Nominal parameters
-VCC_nom = 12;          % Volts
-R1_nom  = 820e3;       % Ohms
-R2_nom  = 390e3;       % Ohms
-RC_nom  = 56e3;        % Ohms
-RE_nom  = 39e3;        % Ohms
+% Nominal Parameters, using real resistor values from Appendix A
+VCC_nom = 15;          % Volts
+R1_nom  = 1.20e6;      % Ohms
+R2_nom  = 820e3;       % Ohms
+RC_nom  = 68e3;        % Ohms
+RE_nom  = 68e3;        % Ohms
 beta_nom = 80;         % unitless
+
+%% Histogram bin edges for consistency
+edges_IC = 60:1:90; % 60 ua to 90 ua in 1 ua steps
+edges_VCE = 3:0.1:7; % VCE range similar thing
 
 Ns = [50, 100, 200, 500];  % Monte Carlo iteration counts
 
@@ -60,7 +64,7 @@ for n_index = 1:length(Ns)
 
     % Plot histograms (ICQ)
     subplot(4,2,2*n_index-1);
-    histogram(IC_vals*1e6);
+    histogram(IC_vals*1e6, edges_IC);
     xlabel('ICQ (uA)');
     ylabel('Count');
     title(sprintf('Global ICQ, N=%d, \\mu=%.2f uA, \\sigma=%.2f uA', ...
@@ -68,7 +72,7 @@ for n_index = 1:length(Ns)
 
     % Plot histograms (VCEQ)
     subplot(4,2,2*n_index);
-    histogram(VCE_vals);
+    histogram(VCE_vals, edges_VCE);
     xlabel('VCEQ (V)');
     ylabel('Count');
     title(sprintf('Global VCEQ, N=%d, \\mu=%.2f V, \\sigma=%.2f V', ...
@@ -126,7 +130,7 @@ for case_num = 1:3
 
         % Plot histograms (ICQ)
         subplot(4,2,2*n_index-1);
-        histogram(IC_vals*1e6);
+        histogram(IC_vals*1e6, edges_IC);
         xlabel('ICQ (uA)');
         ylabel('Count');
         title(sprintf('ICQ, N=%d, \\mu=%.2f uA, \\sigma=%.2f uA', ...
@@ -134,7 +138,7 @@ for case_num = 1:3
 
         % Plot histograms (VCEQ)
         subplot(4,2,2*n_index);
-        histogram(VCE_vals);
+        histogram(VCE_vals, edges_VCE);
         xlabel('VCEQ (V)');
         ylabel('Count');
         title(sprintf('VCEQ, N=%d, \\mu=%.2f V, \\sigma=%.2f V', ...
