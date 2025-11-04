@@ -67,7 +67,7 @@ IC=beta*IB; VE=(beta+1)*IB*RE; VC=VCC-IC*RC; VCE=VC-VE;
 ## 📁 Structure
 ```
 montecarlo_matlab/
- ├── montecarlo_analysis.m
+ ├── monte_bjt.m
  └── README.md
 ```
 
